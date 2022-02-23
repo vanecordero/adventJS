@@ -1,30 +1,40 @@
 'use strict';
 
-const VALUE_OPTIONS={
+const VALUE_VALIDATIONS={
     INPUT:{
         text: (val)=>{
-            //not white space
-            if(val === null || val.match(/^ *$/) !== null){
-                return false
+            //not white space or empty
+            if(val.value === "" || val.value.trim()===""){
+                createAlert();
+                val.focus();
+                return true;
             }
         },
         number:{},
         email:"",
         checkbox:""
     },
-    select:{
-
+    SELECT:{
+       "select-one": (val)=>{
+        if(val.value === ""){ 
+            createAlert();
+            val.focus();
+            return true;
+        }
+    }
     }
 }
 
+
+
+
 function validator(...elem){
- return elem.every(element => {
-     if(!VALUE_OPTIONS[element.tagName][element.type](element.value)){
-         console.log("false")
-        createAlert();
-        return false
-     }
- });
+    let status=false;
+    const noValue = (elem)=> VALUE_VALIDATIONS[elem.tagName][elem.type](elem) === true;
+
+    status = elem.some(noValue);
  
+ return (status) ? false : true
  
 }
+

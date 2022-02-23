@@ -8,19 +8,50 @@ Considera una lista/array de ovejas. Cada oveja tiene un nombre y un color. Haz 
 const FORM = document.getElementById("oveja_form");
 const NAME= document.getElementById("oveja_name");
 const COLOR= document.getElementById("oveja_color");
-let ovejasObejct=[];
+const LIST = document.getElementById("data_container"); 
+const LIST_FILTER = document.getElementById("sheep_list_filter"); 
+const COUNTER_BTN = document.getElementById("counter");
+let fragment = document.createDocumentFragment();
 
-console.log(FORM);
+let sheepObejct=[];
+
+
  FORM.onsubmit = function(e){
     e.preventDefault();
-    console.log(e);
-    console.log(validator(NAME, COLOR));
+   if(validator(NAME, COLOR)){
+     let sheep = {name: NAME.value, color: COLOR.value}
+     showAddData(sheep, LIST);
+     sheepObejct.push(sheep);
+     FORM.reset();
+   }
  }
 
 
-//const ovejasIngresadas = contarOvejas(ovejas)
+//Show info added on screen
+const showAddData = (obj, elemt)=>{
+  let div = document.createElement("div");
+ div.classList="sheep_img_ctn";
+  div.innerHTML=`<img src="src/${obj.color}.png" class="sheep_img_size"><span>${obj.name}</span>`
+  fragment.appendChild(div);
+  elemt.appendChild(fragment);
+}
 
 
+COUNTER_BTN.onclick = function(){
+  LIST_FILTER.innerHTML="";
+  if(sheepObejct.length != 0){    
+    let filterSheep = contarOvejas(sheepObejct);
+    filterSheep.forEach(sheep=>{
+    showAddData(sheep, LIST_FILTER);
+  })
+  }
+}
+
+
+
+
+
+/********************************************** */
 
 
 
@@ -40,7 +71,7 @@ const ovejas = [
     // aquí tu magia
     let newOvejas=[];
     ovejas.forEach((ovejaInfo, i)=> {
-      if(ovejaInfo.color =='rojo' && ovejaInfo.name.toLowerCase().includes('n') && ovejaInfo.name.toLowerCase().includes('a')){
+      if(ovejaInfo.color.toLowerCase() =='rojo' && ovejaInfo.name.toLowerCase().includes('n') && ovejaInfo.name.toLowerCase().includes('a')){
         newOvejas.push(ovejas[i])
       }
     });
@@ -57,3 +88,5 @@ console.group("Ovejas filtradas");
 console.log(ovejasFiltradas);
 console.groupEnd();
 console.groupEnd();
+
+
