@@ -29,14 +29,13 @@ let sheepObejct=[];
 
 //Show info added on screen
 const showAddData = (obj, elemt)=>{
-  let div = document.createElement("div");
- div.classList="sheep_img_ctn";
-  div.innerHTML=`<img src="src/${obj.color}.png" class="sheep_img_size"><span>${obj.name}</span>`
-  fragment.appendChild(div);
-  elemt.appendChild(fragment);
+  let li = document.createElement("li");
+ li.classList="sheep_img_ctn";
+  li.innerHTML=`<img src="src/${obj.color}.png" class="sheep_img_size"><span>${obj.name}</span>`;
+  elemt.appendChild(li);
 }
 
-
+// filter sheep list
 COUNTER_BTN.onclick = function(){
   LIST_FILTER.innerHTML="";
   if(sheepObejct.length != 0){    
